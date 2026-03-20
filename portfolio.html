@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F8F5EF;
+    --ink: #1A1814;
+    --ink-mid: #4A4640;
+    --ink-light: #8A8480;
+    --accent: #C45C2A;
+    --accent-light: #F0E8DF;
+    --border: rgba(26,24,20,0.12);
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(248,245,239,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-name {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+
+  .hero-left {
+    padding: 6rem 3rem 4rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    line-height: 1.1;
+    font-weight: 500;
+    margin-bottom: 1.75rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--ink-mid);
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0.9rem 1.8rem;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .hero-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+  .hero-right {
+    background: var(--accent-light);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding: 3rem;
+    z-index: 1;
+  }
+
+  .stat-item { border-left: 2px solid var(--accent); padding-left: 1.25rem; }
+
+  .stat-number {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-top: 0.3rem;
+  }
+
+  .hero-deco {
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 300px; height: 300px;
+    border: 40px solid rgba(196,92,42,0.08);
+    border-radius: 50%;
+  }
+
+  /* SECTION BASE */
+  section { padding: 6rem 5rem; }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 500;
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+
+  /* ABOUT */
+  #about { background: white; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--ink-mid);
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  .about-aside {}
+
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.9rem;
+    border: 0.5px solid var(--border);
+    color: var(--ink-mid);
+    background: var(--cream);
+  }
+
+  .aside-card {
+    background: var(--accent-light);
+    padding: 1.5rem;
+    border-left: 3px solid var(--accent);
+    margin-top: 1.5rem;
+  }
+
+  .aside-card p {
+    font-size: 0.9rem;
+    color: var(--ink-mid);
+    font-style: italic;
+    line-height: 1.75;
+  }
+
+  /* EXPERIENCE */
+  #experience { background: var(--cream); }
+
+  .exp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .exp-card {
+    background: white;
+    padding: 2.25rem;
+    border: 0.5px solid var(--border);
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .exp-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(26,24,20,0.06); }
+
+  .exp-card-num {
+    font-family: var(--serif);
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: rgba(196,92,42,0.12);
+    position: absolute;
+    top: 1rem; right: 1.5rem;
+    line-height: 1;
+  }
+
+  .exp-company {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .exp-role {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .exp-body {
+    font-size: 0.9rem;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .exp-bullets li {
+    font-size: 0.85rem;
+    color: var(--ink-mid);
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .exp-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  /* EDUCATION */
+  #education { background: var(--ink); color: var(--cream); }
+
+  #education .section-title { color: var(--cream); }
+
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .edu-left {}
+
+  .edu-degree {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+
+  .edu-school {
+    font-size: 0.85rem;
+    color: rgba(248,245,239,0.55);
+    margin-bottom: 2rem;
+    letter-spacing: 0.04em;
+  }
+
+  .thesis-block {
+    background: rgba(248,245,239,0.06);
+    border-left: 2px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .thesis-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .thesis-title {
+    font-size: 0.88rem;
+    color: var(--cream);
+    line-height: 1.65;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  .thesis-grade {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .thesis-grade-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(248,245,239,0.45);
+    margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+
+  .edu-right {}
+
+  .course-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .courses {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .course-item {
+    padding: 0.9rem 1.25rem;
+    background: rgba(248,245,239,0.05);
+    border: 0.5px solid rgba(248,245,239,0.1);
+    font-size: 0.88rem;
+    color: rgba(248,245,239,0.8);
+    transition: background 0.2s;
+  }
+
+  .course-item:hover { background: rgba(248,245,239,0.09); }
+
+  /* SKILLS */
+  #skills { background: white; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .skill-group-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .skill-list li {
+    font-size: 0.9rem;
+    color: var(--ink-mid);
+    padding-left: 0.75rem;
+    border-left: 1.5px solid var(--border);
+    line-height: 1.5;
+  }
+
+  /* CONTACT */
+  #contact { background: var(--accent-light); text-align: center; padding: 6rem 3rem; }
+
+  .contact-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .contact-sub {
+    font-size: 1rem;
+    color: var(--ink-mid);
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.75;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+
+  .contact-btn:hover { transform: translateY(-2px); }
+
+  .contact-btn.primary {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .contact-btn.secondary {
+    background: transparent;
+    color: var(--ink);
+    border: 0.5px solid var(--ink);
+  }
+
+  .contact-btn.secondary:hover { background: var(--ink); color: var(--cream); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: rgba(248,245,239,0.35);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.75rem; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 6rem 1.75rem 3rem; }
+    .hero-right { padding: 3rem 1.75rem; min-height: 240px; }
+    .hero-stats { flex-direction: row; gap: 2rem; flex-wrap: wrap; padding: 2rem; }
+    .about-grid, .exp-grid, .edu-grid, .skills-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .exp-grid { grid-template-columns: 1fr; }
+  }
+
+  /* FADE IN */
+  .fade { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name">[Your Name]</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left fade">
+    <p class="hero-eyebrow">Operations &amp; Strategy</p>
+    <h1 class="hero-title">Building scale.<br/>Driving <em>impact.</em></h1>
+    <p class="hero-sub">Operations professional with EMEA distribution experience at Paramount and a fresh MBA in Strategy &amp; Organization from VU Amsterdam — seeking to deliver operational excellence at a large, complex organisation.</p>
+    <a href="#experience" class="hero-cta">View my work &rarr;</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stats fade">
+      <div class="stat-item">
+        <div class="stat-number">130+</div>
+        <div class="stat-label">EMEA clients managed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Major content brands</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">8.5</div>
+        <div class="stat-label">MBA thesis grade</div>
+      </div>
+    </div>
+    <div class="hero-deco"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid fade">
+    <div class="about-text">
+      <p class="section-label">About me</p>
+      <h2 class="section-title">Operations at scale,<br/>strategy at heart.</h2>
+      <p>I'm an operations professional with a background in media distribution, having managed content delivery for Paramount and CBS across the EMEA region. My day-to-day involved coordinating across 130+ broadcast and streaming clients — from major broadcasters like Ziggo, RAI, and SBS, to regional streamers like VOYO and Canal+.</p>
+      <p>What I bring to a role is the combination of being able to operate in complex, high-volume environments and the ability to think strategically about how to improve them. My MBA from VU Amsterdam sharpened that strategic lens, particularly around M&A, corporate governance, and business ecosystems.</p>
+      <p>I'm now looking for operations, strategy, or business development roles at large organisations where I can apply both sides of that profile.</p>
+    </div>
+    <div class="about-aside">
+      <div class="tag-cloud">
+        <span class="tag">EMEA Operations</span>
+        <span class="tag">Content Distribution</span>
+        <span class="tag">Vendor Management</span>
+        <span class="tag">Cross-functional</span>
+        <span class="tag">M&amp;A Strategy</span>
+        <span class="tag">Corporate Governance</span>
+        <span class="tag">Business Ecosystems</span>
+        <span class="tag">Process Improvement</span>
+        <span class="tag">MBA</span>
+        <span class="tag">Amsterdam-based</span>
+      </div>
+      <div class="aside-card">
+        <p>"I'm looking for a role at a large, complex organisation where both my operational experience and strategic thinking can create real impact."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label fade">Work experience</p>
+  <h2 class="section-title fade">What I've delivered</h2>
+  <div class="exp-grid">
+    <div class="exp-card fade">
+      <div class="exp-card-num">01</div>
+      <p class="exp-company">Paramount · EMEA</p>
+      <h3 class="exp-role">Content Distribution &amp; Client Operations</h3>
+      <p class="exp-body">Owned end-to-end delivery of Paramount film and CBS content across the EMEA region, managing relationships with 130+ broadcast and streaming clients simultaneously.</p>
+      <ul class="exp-bullets">
+        <li>Managed 100+ Paramount clients including Ziggo, RAI, SBS, VOYO, and Canal+</li>
+        <li>Oversaw 30–40 CBS clients including internal partners such as SkyShowtime</li>
+        <li>Coordinated cross-functionally with content, tech, and commercial teams</li>
+        <li>Drove process improvements reducing friction across distribution workflows</li>
+        <li>Served as operational link between Paramount's catalogue and EMEA partners</li>
+      </ul>
+    </div>
+    <div class="exp-card fade">
+      <div class="exp-card-num">02</div>
+      <p class="exp-company">Paramount · Internal transition</p>
+      <h3 class="exp-role">Team Merger &amp; Rapid Scope Expansion</h3>
+      <p class="exp-body">Following an internal restructuring, the CBS and Paramount distribution teams merged. Took on full Paramount film distribution responsibilities on top of existing CBS workload — with no extended transition period.</p>
+      <ul class="exp-bullets">
+        <li>Absorbed an entirely new set of workflows, systems, and client relationships under live operational pressure</li>
+        <li>Scaled from 30–40 CBS clients to 130+ combined clients without service disruption</li>
+        <li>Demonstrated adaptability and resilience in an environment with no option to ease in</li>
+        <li>Built credibility through consistent delivery in a significantly broader and more complex role</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <p class="section-label fade" style="color: rgba(196,92,42,0.85);">Education</p>
+  <h2 class="section-title fade">Academic foundation</h2>
+  <div class="edu-grid fade">
+    <div class="edu-left">
+      <div class="edu-degree">Strategy &amp; Organization</div>
+      <div class="edu-degree" style="font-size:1.1rem; opacity:0.7; margin-bottom:0.25rem;">Master of Business Administration</div>
+      <div class="edu-school">Vrije Universiteit Amsterdam, School of Business and Economics · Class of 2025</div>
+      <div class="thesis-block">
+        <div class="thesis-label">Master's thesis</div>
+        <div class="thesis-title">Exploring the Relationship Between Dual-Class Governance and Acquisition Premiums in Technology Sector M&amp;As</div>
+        <div>
+          <span class="thesis-grade">8.5</span>
+          <span class="thesis-grade-label">/ 10</span>
+        </div>
+      </div>
+    </div>
+    <div class="edu-right">
+      <div class="course-label">Relevant coursework</div>
+      <div class="courses">
+        <div class="course-item">Alliances, Mergers &amp; Acquisitions</div>
+        <div class="course-item">Strategic Entrepreneurship</div>
+        <div class="course-item">Business Ecosystems and Open Innovation</div>
+        <div class="course-item">Corporate Finance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label fade">Skills &amp; tools</p>
+  <h2 class="section-title fade">What I work with</h2>
+  <div class="skills-grid fade">
+    <div>
+      <div class="skill-group-title">Operations</div>
+      <ul class="skill-list">
+        <li>EMEA client &amp; partner management</li>
+        <li>Content distribution workflows</li>
+        <li>Vendor &amp; supplier management</li>
+        <li>Process improvement</li>
+        <li>Cross-functional coordination</li>
+        <li>Service continuity &amp; delivery</li>
+      </ul>
+    </div>
+    <div>
+      <div class="skill-group-title">Strategy</div>
+      <ul class="skill-list">
+        <li>M&amp;A analysis &amp; corporate governance</li>
+        <li>Business ecosystem strategy</li>
+        <li>Strategic planning</li>
+        <li>Stakeholder management</li>
+        <li>Financial analysis</li>
+        <li>Open innovation frameworks</li>
+      </ul>
+    </div>
+    <div>
+      <div class="skill-group-title">Tools</div>
+      <ul class="skill-list">
+        <li>Microsoft Excel &amp; PowerPoint</li>
+        <li>Add your tools here</li>
+        <li>e.g. Salesforce, SQL, Power BI</li>
+        <li>e.g. SAP, Airtable, Jira</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade">
+    <h2 class="contact-title">Let's work together</h2>
+    <p class="contact-sub">I'm actively exploring operations, strategy, and business development roles at large organisations. If you think there's a fit, I'd love to connect.</p>
+    <div class="contact-links">
+      <a href="mailto:your@email.com" class="contact-btn primary">Get in touch</a>
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-btn secondary">LinkedIn</a>
+      <a href="#" class="contact-btn secondary">Download CV</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 [Your Name] &mdash; Amsterdam
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
